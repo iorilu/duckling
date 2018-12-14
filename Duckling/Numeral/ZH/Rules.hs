@@ -197,12 +197,27 @@ ruleNumeralsIntersectConsecutiveUnit = Rule
       | d == 1 = Just $ v1 + v2
       | otherwise = Nothing
 
+ruleNumeralsPercentage :: Rule
+ruleNumeralsPercentage = Rule
+  { name = "numbers suffix with %"
+  , pattern =
+    [
+    dimension Numeral,
+     regex "(%|百分|个点)"
+    ]
+  , prod = \case
+      (_:Token Numeral nd:_)-> double (TNumeral.value nd * (1e-2))
+      (Token Numeral nd:_)-> double (TNumeral.value nd * (1e-2))
+      _ -> Nothing
+  }
+
 rules :: [Rule]
 rules =
   [ ruleDecimalNumeral
   , ruleDecimalWithThousandsSeparator
   , ruleInteger
   , ruleIntegerWithThousandsSeparator
+  , ruleNumeralsPercentage
   , ruleNumeral
   , ruleNumeralsIntersectConsecutiveUnit
   , ruleNumeralsIntersectNonconsectiveUnit

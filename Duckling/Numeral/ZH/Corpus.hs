@@ -137,4 +137,10 @@ allExamples = concat
              , "-.0012G"
              , "负一百二十万"
              ]
+  , examples (NumeralValue 0.05)
+             [ "5%"
+             , "5.0%"
+             , "5个点"
+             , "五个点"
+             ]
   ]
